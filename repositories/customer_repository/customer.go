@@ -50,7 +50,11 @@ func GetOne(filter interface{}, projection interface{}) (*models.Customer, error
 }
 
 func Update(customer models.Customer) error {
-	if _, err := coll.UpdateByID(context.TODO(), bson.D{{Key: "id", Value: customer.Id}}, customer); err != nil {
+	if _, err := coll.UpdateOne(
+		context.TODO(),
+		bson.D{{Key: "id", Value: customer.Id}},
+		bson.D{{Key: "$set", Value: customer}},
+	); err != nil {
 		log.Fatal(err)
 		return err
 	}

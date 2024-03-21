@@ -18,6 +18,22 @@ type Customer struct {
 	Transactions []Transaction
 }
 
+func (c *Customer) ReverseTransactions() {
+	if len(c.Transactions) == 0 {
+		return
+	}
+
+	length := len(c.Transactions)
+	reversed := make([]Transaction, length)
+
+	for i, v := range c.Transactions {
+		reversed[length-i-1] = v
+	}
+
+	c.Transactions = reversed
+
+}
+
 func (c *Customer) Transact(transaction Transaction) error {
 	switch transaction.TransactionType {
 	case Credit:
